@@ -3,6 +3,30 @@
 const express = require("express");
 const mysql = require("mysql2");
 const inquirer = require("inquirer");
+const cTable = require('console.table');
+
+// Connect to database
+const connection = mysql.createConnection(
+  {
+    host: 'localhost',
+    // MySQL username,
+    user: 'root',
+    // TODO: Add MySQL password here
+    password: '',
+    database: 'activity.tracker_db'
+  },
+  console.log(`Connected to the activity.tracker_db.`)
+);
+
+console.table([
+  {
+    name: 'foo',
+    age: 10
+  }, {
+    name: 'bar',
+    age: 20
+  }
+]);
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -10,19 +34,6 @@ const app = express();
 // Express middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
-// Connect to database
-const db = mysql.createConnection(
-	{
-		host: "localhost",
-		// MySQL username,
-		user: "root",
-		// TODO: Add MySQL password here
-		password: "",
-		database: "",
-	},
-	console.log(`Connected to the movies_db database.`)
-);
 
 function menu() {
 	inquirer.createPromptModule([
