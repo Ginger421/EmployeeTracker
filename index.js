@@ -1,8 +1,5 @@
-
-
-const express = require("express");
 const mysql = require("mysql2");
-const inquirer = require("inquirer");
+const inquirer = require('inquirer');
 const cTable = require('console.table');
 
 // Connect to database
@@ -13,7 +10,7 @@ const connection = mysql.createConnection(
     user: 'root',
     // TODO: Add MySQL password here
     password: '',
-    database: 'activity.tracker_db'
+    database: 'activity.tracker_db'  
   },
   console.log(`Connected to the activity.tracker_db.`)
 );
@@ -28,23 +25,15 @@ console.table([
   }
 ]);
 
-const PORT = process.env.PORT || 3001;
-const app = express();
-
-// Express middleware
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-
-function menu() {
-	inquirer.createPromptModule([
+	inquirer.prompt([
 		{
 			type: "list",
 			name: "options",
 			message: "Please select from the menu options",
 			choices: [
 				"View all Departments",
-				"View roles",
-				"Employees",
+				"View all roles",
+				"View all employees",
 				"Add department",
 				"Add role",
 				"Add employee",
@@ -52,17 +41,15 @@ function menu() {
 				"Quit",
 			],
 		},
-	]).input;
-
-	//end menu function
-}
-
-switch (input.options) {
+	]).then(menu=> {
+switch (menu.options) {
 	case "View all Departments":
+    viewDepts()
 		break;
-	case "View roles":
+	case "View all roles":
+    viewRoles()
 		break;
-	case "Employees":
+	case "View all employees":
 		break;
 	case "Add department":
     addDept()
@@ -71,8 +58,10 @@ switch (input.options) {
     addRoles()
 		break;
 	case "Add employee":
+    addEmp()
 		break;
 	case "Update employee role":
+    updateEmpRole()
 		break;
 	case "Quit":
 		break;
@@ -81,6 +70,10 @@ switch (input.options) {
 }
 
 //end switch
+  });
+
+
+
 
 function addDept() {
 	inquirer
