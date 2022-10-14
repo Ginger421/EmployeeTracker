@@ -9,10 +9,10 @@ const connection = mysql.createConnection(
     // MySQL username,
     user: 'root',
     // TODO: Add MySQL password here
-    password: '',
-    database: 'activity.tracker_db'  
+    password: 'Tadgage#2627',
+    database: 'tracker_db'  
   },
-  console.log(`Connected to the activity.tracker_db.`)
+  console.log(`Connected to the tracker_db.`)
 );
 
 console.table([
@@ -25,10 +25,10 @@ console.table([
   }
 ]);
 
-	inquirer.prompt([
-		{
-			type: "list",
+function menuPrompts() {
+	inquirer.prompt([{	
 			name: "options",
+			type: "list",
 			message: "Please select from the menu options",
 			choices: [
 				"View all Departments",
@@ -39,10 +39,10 @@ console.table([
 				"Add employee",
 				"Update employee role",
 				"Quit",
-			],
-		},
-	]).then(menu=> {
-switch (menu.options) {
+			]
+		}])
+	.then((input) => {
+		switch (input.options) {
 	case "View all Departments":
     viewDepts()
 		break;
@@ -50,12 +50,13 @@ switch (menu.options) {
     viewRoles()
 		break;
 	case "View all employees":
+	viewEmp()
 		break;
 	case "Add department":
-    addDept()
+    addDept();
 		break;
 	case "Add role":
-    addRoles()
+    addRole()
 		break;
 	case "Add employee":
     addEmp()
@@ -66,42 +67,113 @@ switch (menu.options) {
 	case "Quit":
 		break;
 	default:
-		break;
+		console.log("Have a nice day!")
 }
-
 //end switch
-  });
+  })
+};
+
+menuPrompts();
 
 
-
-
-function addDept() {
+addDept = () => {
 	inquirer
 		.prompt([
 			{
 				type: "input",
-				name: "addDepartment",
-				message: "What is the name of the department?",
-			},
-      {
-        type: "input",
-        name: "departmentId",
-        message: "What is the department id?"
-      },
+				name: "name", //is referencing name col from department table
+				message: "What is the name of the new department?",
+			}
 		]) //end prompt
 		.then((input) => {
 			console.log(input);
-			insertDepartment(input.addDepartment);
-		});
-}; //end addDept()
-
-
-function addRoles() {
-  inquirer
-  .prompt([{
-    type: "input",
-    name: "addRole",
-    message: "What is the name of the role you would like to add?"
-  } 
-])
+      //department is department table 
+			db.query('INSERT INTO department SET ? input', error => {
+				if(error) {console.log(error)}
+		})
+menuPrompts();
+}); //end addDept()
 }
+
+addRole = () => {
+	inquirer
+		.prompt([
+			{
+				type: "input",
+				name: "title", //is referencing title col from role table
+				message: "What is the name of the new role?",
+			},
+      	{
+        	type: "input",
+        	name: "salary", //ref salary col in table
+			message: "What is the salary for this role?",
+      	},
+		{
+			type: 'input',
+			name: "department_id", 
+			message: "What id the id of the department this role belongs to?"
+		}
+		]) //end prompt
+		.then((input) => {
+			console.log(input)
+      //role is role table 
+			db.query('INSERT INTO role SET ? input', err => {
+				if(err) {console.log(err)}
+		})
+})}; //end addRole()
+
+
+addEmp = () => {
+	inquirer
+		.prompt([
+			{
+				type: "input",
+				name: "first_name", //is referencing table
+				message: "What is the first name of the employee?",
+			},
+			{
+				type: "input",
+				name: "last_name", //is referencing table
+				message: "What is the last name of the employee?",
+			},
+      	{
+        	type: "input",
+        	name: "role_id", //ref table
+			message: "What is the role id for this employee?",
+      	},
+		{
+			message: 'Is this employee a manager?',
+			type: "list",
+			choices: ['yes', 'no'],
+			name: "isManager",
+		}
+		]) //end prompt
+		.then((input) => {
+			console.log(input);
+			if(input.isManager === "yes") {
+				delete input.isManager
+				db.query('INSERT INTO employees SET ? input', error => {
+					if(error) {console.log(error)}
+				})
+			} else if (input.isManager === 'no') {
+				inquirer.prompt([{
+					type: "input",
+					name: "manager_id",
+					message: "What is the id of this employee's manager?"
+				}])
+				.then(notManager => {
+					delete input.isManager
+					let newEmployee = {
+						...input,
+						...notManager
+					}
+					db.query('INSERT INTO employees SET ? newEmployee', err)
+				})
+			}
+
+		
+		})
+}; //end addEmp
+
+
+
