@@ -3,7 +3,7 @@ const inquirer = require('inquirer');
 const cTable = require('console.table');
 
 // Connect to database
-const connection = mysql.createConnection(
+const db = mysql.createConnection(
   {
     host: 'localhost',
     // MySQL username,
@@ -88,7 +88,7 @@ addDept = () => {
 		.then((input) => {
 			console.log(input);
       //department is department table 
-			db.query('INSERT INTO department SET ? input', error => {
+			db.query('INSERT INTO department (name) VALUE (name)', error => {
 				if(error) {console.log(error)}
 		})
 menuPrompts();
@@ -117,7 +117,7 @@ addRole = () => {
 		.then((input) => {
 			console.log(input)
       //role is role table 
-			db.query('INSERT INTO role SET ? input', err => {
+			db.query('INSERT INTO role (title, salary, department_id) VALUE (title, salary, department_id)', err => {
 				if(err) {console.log(err)}
 		})
 })}; //end addRole()
