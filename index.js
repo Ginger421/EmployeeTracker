@@ -152,7 +152,7 @@ addEmp = () => {
 			console.log(input);
 			if(input.isManager === "yes") {
 				delete input.isManager
-				db.query('INSERT INTO employees SET ? input', error => {
+				db.query('INSERT INTO employees (first_name, last_name, role_id) VALUE (first_name, last_name, role_id)', error => {
 					if(error) {console.log(error)}
 				})
 			} else if (input.isManager === 'no') {
@@ -167,7 +167,7 @@ addEmp = () => {
 						...input,
 						...notManager
 					}
-					db.query('INSERT INTO employees SET ? newEmployee', err)
+					db.query('INSERT INTO employees () ? newEmployee', err)
 				})
 			}
 
@@ -175,5 +175,10 @@ addEmp = () => {
 		})
 }; //end addEmp
 
+viewDepts= () => {
 
+}; //end viewdepts()
 
+// viewRoles();
+
+// viewEmp();
