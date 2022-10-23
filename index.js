@@ -175,6 +175,20 @@ addEmp = () => {
 		})
 }; //end addEmp
 
+
+updateEmpRole= () => {
+	inquirer.prompt([
+		{
+			type: input,
+			message: "What is the id for the employee you want to update?",
+			name: id
+		}
+	]).then((input)=> {
+		db.query
+	}
+	) //end .then
+}; ///end updateemprole()
+
 viewDepts= () => {
 
 }; //end viewdepts()
