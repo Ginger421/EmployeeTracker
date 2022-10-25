@@ -89,10 +89,13 @@ addDept = () => {
 		.then((input) => {
 			console.log(input);
       //department is department table 
-			db.query('INSERT INTO department (name) VALUE (name)', error => {
-				if(error) {console.log(error)}
+			db.query(`INSERT INTO department (name) VALUES ("${input.name}");`, 
+			function (error, results) {
+				error ? console.log(error)
+				: console.log("Department Added!");
+		menuPrompts();	
 		})
-menuPrompts();
+	
 }) 
 }; //end addDept()
 
