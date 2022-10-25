@@ -2,6 +2,7 @@ const mysql = require("mysql2");
 const inquirer = require('inquirer');
 const cTable = require('console.table');
 
+
 // Connect to database
 const db = mysql.createConnection(
   {
@@ -92,8 +93,8 @@ addDept = () => {
 				if(error) {console.log(error)}
 		})
 menuPrompts();
-}); //end addDept()
-}
+}) 
+}; //end addDept()
 
 addRole = () => {
 	inquirer
@@ -120,6 +121,8 @@ addRole = () => {
 			db.query('INSERT INTO role (title, salary, department_id) VALUE (title, salary, department_id)', err => {
 				if(err) {console.log(err)}
 		})
+
+		menuPrompts();
 })}; //end addRole()
 
 
@@ -171,28 +174,50 @@ addEmp = () => {
 				})
 			}
 
-		
+		menuPrompts();
 		})
 }; //end addEmp
 
 
-updateEmpRole= () => {
-	inquirer.prompt([
-		{
-			type: input,
-			message: "What is the id for the employee you want to update?",
-			name: id
-		}
-	]).then((input)=> {
-		db.query
-	}
-	) //end .then
-}; ///end updateemprole()
+// updateEmpRole= () => {
+// 	inquirer.prompt([
+// 		{
+// 			type: "input",
+// 			message: "What is the id for the employee you want to update?",
+// 			name: id,
+// 		},
+// 		{
+// 			type: "input",
+// 			message: "What is the id of employee's new role?",
+// 			id: "role_id"
+// 		}
+// 	]).then((input)=> {
+// 		db.query(UPDATE employees )
+// 	}
+// 	) //end .then
+// }; ///end updateemprole()
 
 viewDepts= () => {
-
+	db.query("SELECT * from department", function (err, results) {
+		console.table(results);
+		menuPrompts();
+	})
 }; //end viewdepts()
 
+
 // viewRoles();
+viewRoles= () => {
+	db.query("SELECT * from role", function (err, results) {
+		console.table(results);
+		menuPrompts();
+	})
+}; //end viewRoles()
+
 
 // viewEmp();
+viewEmp= () => {
+	db.query("SELECT * from employees", function (err, results) {
+		console.table(results);
+		menuPrompts();
+	})
+}; //end viewEmp()
