@@ -165,7 +165,7 @@ addEmp = () => {
 		})
 }; //end addEmp
 
-//uodate employee role using the id for the employee and updating using the role_id
+//uodate employee role using the id for the employee and updating using the
 updateEmpRole= () => {
 	inquirer.prompt([
 		{
