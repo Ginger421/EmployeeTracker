@@ -10,7 +10,7 @@ const db = mysql.createConnection(
     // MySQL username,
     user: 'root',
     // TODO: Add MySQL password here
-    password: 'Tadgage#2627',
+    password: 'ADD YOUR PASSWORD',
     database: 'tracker_db'  
   },
   console.log(`Connected to the tracker_db.`)
