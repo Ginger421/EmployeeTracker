@@ -1,7 +1,7 @@
 # EmployeeTracker
 
 ## Description
-This application was designed to allow users to manage database by viewing, adding and updating departments, roles and employees. This application was created using Node.js, JavaScript, cTable, mysql and inquirer.
+This application is a content management system and was designed to allow users to manage database by viewing, adding and updating departments, roles and employees. This application was created using Node.js, JavaScript, cTable, mysql2 and inquirer.
 
 ## Table of Contents
 * [Usage](#usage)
